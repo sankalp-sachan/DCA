@@ -1,5 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
-import api from '../utils/api';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User, UserPlus, ArrowRight } from 'lucide-react';
@@ -9,22 +8,6 @@ const Register = () => {
     const { register } = useContext(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState('');
-
-    const [roles, setRoles] = useState([]);
-
-    useEffect(() => {
-        const fetchRoles = async () => {
-            try {
-                const res = await api.get('/auth/roles');
-                setRoles(res.data);
-            } catch (err) {
-                console.error('Failed to fetch roles');
-                // Fallback
-                setRoles(['student', 'volunteer']);
-            }
-        };
-        fetchRoles();
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -79,20 +62,6 @@ const Register = () => {
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             required
                         />
-                    </div>
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                        <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontWeight: '600' }}>I am a:</span>
-                        <select
-                            style={{ flex: 1 }}
-                            value={formData.role}
-                            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                        >
-                            {roles.map(role => (
-                                <option key={role} value={role}>
-                                    {role.charAt(0).toUpperCase() + role.slice(1)}
-                                </option>
-                            ))}
-                        </select>
                     </div>
                     <button type="submit" className="btn btn-primary" style={{ padding: '1rem', width: '100%', fontSize: '1rem' }}>
                         Create Account <ArrowRight size={20} />
