@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import api from '../utils/api';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User, UserPlus, ArrowRight } from 'lucide-react';
@@ -8,6 +9,22 @@ const Register = () => {
     const { register } = useContext(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState('');
+
+    const [roles, setRoles] = useState([]);
+
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const res = await api.get('/auth/roles');
+                setRoles(res.data);
+            } catch (err) {
+                console.error('Failed to fetch roles');
+                // Fallback
+                setRoles(['student', 'volunteer']);
+            }
+        };
+        fetchRoles();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -70,8 +87,11 @@ const Register = () => {
                             value={formData.role}
                             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                         >
-                            <option value="student">Student</option>
-                            <option value="volunteer">Volunteer</option>
+                            {roles.map(role => (
+                                <option key={role} value={role}>
+                                    {role.charAt(0).toUpperCase() + role.slice(1)}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <button type="submit" className="btn btn-primary" style={{ padding: '1rem', width: '100%', fontSize: '1rem' }}>
