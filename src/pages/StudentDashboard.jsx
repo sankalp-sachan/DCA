@@ -233,26 +233,29 @@ const StudentDashboard = () => {
                                     <h3 style={{ marginBottom: '1.5rem' }}>My Certification Accomplishments</h3>
 
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' }}>
-                                        {registrations.filter(r => r.status === 'Attended').length === 0 ? (
-                                            <div style={{ gridColumn: '1 / -1' }} className="card">
-                                                <div style={{ textAlign: 'center', padding: '2rem' }}>
-                                                    <Award size={40} style={{ margin: '0 auto 1rem', opacity: 0.2 }} />
-                                                    <p style={{ color: 'var(--text-muted)' }}>Certificates will appear here once you attend an event and your attendance is marked.</p>
+                                        {registrations.filter(r => r.status === 'Attended' || r.status === 'Registered').map(reg => (
+                                            <div key={reg._id} className="card" style={{ padding: '1.5rem', textAlign: 'center' }}>
+                                                <div style={{ backgroundColor: '#f0fdf4', color: '#16a34a', padding: '1rem', borderRadius: '12px', width: 'fit-content', margin: '0 auto 1rem' }}>
+                                                    <Award size={32} />
                                                 </div>
+                                                <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>{reg.eventId?.title}</h4>
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>Issued: {new Date().toLocaleDateString()}</p>
+                                                <button
+                                                    onClick={async () => {
+                                                        try {
+                                                            const res = await api.post(`/admin/generate-certificate/${reg._id}`);
+                                                            window.open(`${api.defaults.baseURL.replace('/api', '')}${res.data.url}`, '_blank');
+                                                        } catch (err) {
+                                                            alert('Certificate generation fee/system error. Contact admin.');
+                                                        }
+                                                    }}
+                                                    className="btn btn-primary"
+                                                    style={{ width: '100%', fontSize: '0.85rem' }}
+                                                >
+                                                    <Download size={16} /> Download PDF
+                                                </button>
                                             </div>
-                                        ) : (
-                                            registrations.filter(r => r.status === 'Attended').map(reg => (
-                                                <div key={reg._id} className="card" style={{ padding: '1.5rem', textAlign: 'center' }}>
-                                                    <div style={{ backgroundColor: '#f0fdf4', color: '#16a34a', padding: '1rem', borderRadius: '12px', width: 'fit-content', margin: '0 auto 1rem' }}>
-                                                        <Award size={32} />
-                                                    </div>
-                                                    <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>{reg.eventId?.title}</h4>
-                                                    <button className="btn btn-primary" style={{ width: '100%', fontSize: '0.85rem' }}>
-                                                        <Download size={16} /> Download PDF
-                                                    </button>
-                                                </div>
-                                            ))
-                                        )}
+                                        ))}
                                     </div>
                                 </motion.div>
                             )}

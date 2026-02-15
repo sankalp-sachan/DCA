@@ -77,7 +77,7 @@ const Footer = () => {
                             <div style={{ display: 'flex', gap: '0.75rem' }}>
                                 <MapPin size={20} className="text-primary" />
                                 <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-                                    Ground Floor, Academic Block A,<br />University Campus, Sector 14
+                                    UIET - IV CSJMU, KANPUR
                                 </span>
                             </div>
                             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>

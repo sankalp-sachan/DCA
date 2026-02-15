@@ -42,10 +42,14 @@ const Navbar = () => {
             <div className="container nav-content">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
                     <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <img src="/logo.png" alt="DCA Logo" style={{ height: '50px', width: 'auto', borderRadius: '4px' }} />
-                        <img src="/UGC.png" alt="DCA Logo" style={{ height: '50px', width: 'auto', borderRadius: '4px' }} />
-                        <img src="/NAAC.png" alt="DCA Logo" style={{ height: '50px', width: 'auto', borderRadius: '4px' }} />
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                            <img src="/logo.png" alt="University Logo" style={{ height: '52px', width: 'auto' }} />
+                            <div style={{ display: 'flex', gap: '0.4rem' }}>
+                                <img src="/UGC.png" alt="UGC Recognized" style={{ height: '35px', width: 'auto' }} />
+                                <img src="/NAAC.png" alt="NAAC Accredited" style={{ height: '35px', width: 'auto' }} />
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', borderLeft: '1.5px solid var(--border)', paddingLeft: '1rem', marginLeft: '0.5rem' }}>
                             <span style={{ fontSize: '1.25rem', fontWeight: '800', lineHeight: '1', color: 'var(--academic-blue)' }}>DCA PORTAL</span>
                             <span style={{ fontSize: '0.65rem', fontWeight: '600', color: 'var(--text-muted)', letterSpacing: '0.05em' }}>DEPT. OF COMPUTER APPLICATIONS</span>
                         </div>
